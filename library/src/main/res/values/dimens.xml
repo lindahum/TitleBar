@@ -1,0 +1,31 @@
+<resources>
+    <dimen name="titlebar_height">50dip</dimen>
+    <dimen name="titlebar_text_size">18sp</dimen>
+    <dimen name="titlebar_text_sub_size">14sp</dimen>
+    <dimen name="titlebar_text_navigate_size">20sp</dimen>
+
+    <dimen name="default_padding_3">3dp</dimen>
+    <dimen name="default_padding_5">5dp</dimen>
+    <dimen name="default_padding_8">8dp</dimen>
+    <dimen name="default_padding_10">10dp</dimen>
+    <dimen name="default_padding_12">12dp</dimen>
+    <dimen name="default_padding_15">15dp</dimen>
+    <dimen name="default_padding_16">16dp</dimen>
+    <dimen name="default_padding_20">20dp</dimen>
+    <dimen name="default_padding_30">30dp</dimen>
+    <dimen name="default_padding_40">40dp</dimen>
+    <dimen name="default_padding_50">50dp</dimen>
+
+    <!--divider_line-->
+    <dimen name="activity_height_line">1dp</dimen>
+    <dimen name="activity_height_line_big">5dp</dimen>
+
+    <!--textsize-->
+    <dimen name="default_text_size_10">10sp</dimen>
+    <dimen name="default_text_size_12">12sp</dimen>
+    <dimen name="default_text_size_14">14sp</dimen>
+    <dimen name="default_text_size_16">16sp</dimen>
+    <dimen name="default_text_size_18">18sp</dimen>
+    <dimen name="default_text_size_20">20sp</dimen>
+    <dimen name="default_text_size_25">25sp</dimen>
+</resources>

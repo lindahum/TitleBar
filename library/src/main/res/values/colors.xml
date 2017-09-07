@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--主题色-->
+    <color name="main_color">#009555</color>
+    <color name="main_bg">#f1efef</color>
+    <color name="divider">#e6e6e6</color>
+    <color name="white">#ffffff</color>
+
+</resources>
