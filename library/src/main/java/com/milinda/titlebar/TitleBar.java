@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,9 +21,9 @@ public class TitleBar extends RelativeLayout {
     //标题栏的内容
     private TextView tvTitle;
     //标题栏的返回按钮
-    private Button btnTitleBack;
+    private TextView tvTitleBack;
     //标题栏的编辑按钮
-    private Button btnTitleEdit;
+    private TextView tvTitleEdit;
     //标题栏
     private RelativeLayout rvTltle;
 
@@ -33,8 +32,24 @@ public class TitleBar extends RelativeLayout {
 
     //标题栏的背景颜色
     private int bgColor=0;
+    //标题栏的内容字体颜色
+    private int textColor=0;
+    //标题栏的高度
+    private int height=0;
+    //标题栏的左右边距
+    private int padding=0;
+    //标题栏的标题的字体大小
+    private float contentTextSize=0;
+    //标题栏的编辑按钮的字体大小
+    private float editTextSize=0;
+    //标题栏的返回按钮图片
+    private int backImgRes=0;
+    //标题栏的编辑按钮的图片
+    private int editImgRes=0;
     //标题栏的类型
     private int type=0;
+    //标题栏的返回按钮的内容
+    private String backContent="";
     //标题栏的编辑按钮的内容
     private String editContent="编辑";
     //标题栏的标题内容
@@ -70,10 +85,40 @@ public class TitleBar extends RelativeLayout {
                 int attr = t.getIndex(i);
                 if (attr == R.styleable.TitleBar_TitleBarBackgroundColor) {
                     bgColor = t.getColor(R.styleable.TitleBar_TitleBarBackgroundColor,
-                            ContextCompat.getColor(context, R.color.main_color));
+                            ContextCompat.getColor(context, R.color.white));
+
+                }else if (attr == R.styleable.TitleBar_TitleBarTextColor) {
+                    textColor = t.getColor(R.styleable.TitleBar_TitleBarTextColor,
+                            ContextCompat.getColor(context, R.color.main_textcolor));
+
+                }else if (attr == R.styleable.TitleBar_TitleBarHeight) {
+                    height = t.getDimensionPixelOffset(R.styleable.TitleBar_TitleBarHeight,
+                            getResources().getDimensionPixelOffset(R.dimen.titlebar_height));
+
+                }else if (attr == R.styleable.TitleBar_TitleBarPadding) {
+                    padding = t.getDimensionPixelOffset(R.styleable.TitleBar_TitleBarPadding,
+                            getResources().getDimensionPixelOffset(R.dimen.default_padding_15));
+
+                }else if (attr == R.styleable.TitleBar_TitleBarContentTextSize) {
+                    contentTextSize = t.getDimension(R.styleable.TitleBar_TitleBarContentTextSize,
+                            getResources().getDimension(R.dimen.default_text_size_20));
+
+                }else if (attr == R.styleable.TitleBar_TitleBarEditTextSize) {
+                    editTextSize = t.getDimension(R.styleable.TitleBar_TitleBarEditTextSize,
+                            getResources().getDimension(R.dimen.default_text_size_14));
+
+                }else if (attr == R.styleable.TitleBar_TitleBarBackImg) {
+                    backImgRes = t.getResourceId(R.styleable.TitleBar_TitleBarBackImg,
+                            R.drawable.ic_titlebar_back_black);
+
+                }else if (attr == R.styleable.TitleBar_TitleBarEditImg) {
+                    editImgRes = t.getResourceId(R.styleable.TitleBar_TitleBarEditImg, 0);
 
                 } else if (attr == R.styleable.TitleBar_TitleBarType) {
                     type = t.getInteger(R.styleable.TitleBar_TitleBarType, 0);
+
+                } else if (attr == R.styleable.TitleBar_TitleBarBackContent) {
+                    backContent = t.getString(R.styleable.TitleBar_TitleBarBackContent);
 
                 } else if (attr == R.styleable.TitleBar_TitleBarEditContent) {
                     editContent = t.getString(R.styleable.TitleBar_TitleBarEditContent);
@@ -101,30 +146,46 @@ public class TitleBar extends RelativeLayout {
         View view = inflater.inflate(R.layout.include_titlebar, this);
 
         tvTitle=(TextView) view.findViewById(R.id.tv_title);
-        btnTitleBack=(Button) view.findViewById(R.id.btn_title_back);
-        btnTitleEdit=(Button) view.findViewById(R.id.btn_title_edit);
+        tvTitleBack=(TextView) view.findViewById(R.id.tv_title_back);
+        tvTitleEdit=(TextView) view.findViewById(R.id.tv_title_edit);
         rvTltle=(RelativeLayout) view.findViewById(R.id.rv_title);
 
         tvTitle.setText(titleContent);
-        bgColor = bgColor==0?ContextCompat.getColor(context, R.color.main_color):bgColor;
+        tvTitle.setTextSize(contentTextSize);
+
+        textColor = textColor==0?ContextCompat.getColor(context, R.color.main_textcolor):textColor;
+
+        tvTitleEdit.setText(editContent);
+        tvTitleEdit.setTextSize(editTextSize);
+        tvTitleEdit.setTextColor(textColor);
+        tvTitleBack.setPadding(0,0,padding,0);
+        if(editImgRes>0)
+            tvTitleEdit.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(editImgRes),null,null,null);
+
+        tvTitleBack.setText(backContent);
+        tvTitleBack.setTextSize(editTextSize);
+        tvTitleBack.setTextColor(textColor);
+        tvTitleBack.setPadding(padding,0,0,0);
+        tvTitleBack.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(backImgRes),null,null,null);
+
+        bgColor = bgColor==0?ContextCompat.getColor(context, R.color.white):bgColor;
         rvTltle.setBackgroundColor(bgColor);
+        rvTltle.setMinimumHeight(height);
         switch (type){
             case TITLEBAR_TYPE_ALL:
-                btnTitleEdit.setText(editContent);
                 break;
             case TITLEBAR_TYPE_NO_BACK_EDIT:
-                btnTitleBack.setVisibility(View.GONE);
-                btnTitleEdit.setVisibility(View.GONE);
+                tvTitleBack.setVisibility(View.GONE);
+                tvTitleEdit.setVisibility(View.GONE);
                 break;
             case TITLEBAR_TYPE_NO_EDIT:
-                btnTitleEdit.setVisibility(View.GONE);
+                tvTitleEdit.setVisibility(View.GONE);
                 break;
             case TITLEBAR_TYPE_NO_BACK:
-                btnTitleEdit.setText(editContent);
-                btnTitleBack.setVisibility(View.GONE);
+                tvTitleBack.setVisibility(View.GONE);
                 break;
         }
-        btnTitleBack.setOnClickListener(new OnClickListener() {
+        tvTitleBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((Activity)context).finish();
@@ -137,7 +198,7 @@ public class TitleBar extends RelativeLayout {
      * @param listener
      */
     public void setEditClickListener(OnClickListener listener){
-        btnTitleEdit.setOnClickListener(listener);
+        tvTitleEdit.setOnClickListener(listener);
     }
 
     /**
@@ -153,7 +214,7 @@ public class TitleBar extends RelativeLayout {
      * @param content
      */
     public void setEditContent(String content){
-        btnTitleEdit.setText(content);
+        tvTitleEdit.setText(content);
     }
 
     /**
@@ -163,9 +224,9 @@ public class TitleBar extends RelativeLayout {
     public void setIsEdit(boolean isEdit){
         this.isEdit=isEdit;
         if(isEdit){
-            btnTitleEdit.setText(context.getString(R.string.cancel));
+            tvTitleEdit.setText(context.getString(R.string.cancel));
         }else{
-            btnTitleEdit.setText(context.getString(R.string.edit));
+            tvTitleEdit.setText(context.getString(R.string.edit));
         }
     }
 
@@ -181,6 +242,6 @@ public class TitleBar extends RelativeLayout {
      * 切换标题栏状态
      */
     public void changType(){
-        btnTitleEdit.setVisibility(View.GONE);
+        tvTitleEdit.setVisibility(View.GONE);
     }
 }

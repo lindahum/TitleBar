@@ -2,7 +2,15 @@
 <resources>
     <declare-styleable name="TitleBar">
         <attr name="TitleBarBackgroundColor" format="color" />
+        <attr name="TitleBarTextColor" format="color" />
+        <attr name="TitleBarHeight" format="dimension" />
+        <attr name="TitleBarPadding" format="dimension" />
+        <attr name="TitleBarContentTextSize" format="dimension" />
+        <attr name="TitleBarEditTextSize" format="dimension" />
+        <attr name="TitleBarBackImg" format="reference" />
+        <attr name="TitleBarEditImg" format="reference" />
         <attr name="TitleBarType" format="integer" />
+        <attr name="TitleBarBackContent" format="string" />
         <attr name="TitleBarEditContent" format="string" />
         <attr name="TitleBarContent" format="string" />
     </declare-styleable>

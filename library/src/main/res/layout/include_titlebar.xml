@@ -3,21 +3,21 @@
                 android:id="@+id/rv_title"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/titlebar_height"
-                android:background="@color/main_color">
+                android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@color/white"
+        android:textColor="@color/main_textcolor"
         android:textSize="@dimen/default_text_size_20"/>
 
-    <Button
-        android:id="@+id/btn_title_back"
+    <TextView
+        android:id="@+id/tv_title_back"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:drawableLeft="@drawable/ic_back"
+        android:drawableLeft="@drawable/ic_titlebar_back_black"
         android:drawablePadding="5dip"
         android:gravity="center"
         android:paddingLeft="@dimen/default_padding_15"
@@ -25,8 +25,8 @@
         android:background="@null"
         />
 
-    <Button
-        android:id="@+id/btn_title_edit"
+    <TextView
+        android:id="@+id/tv_title_edit"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:drawablePadding="5dip"
@@ -35,7 +35,7 @@
         android:paddingRight="@dimen/default_padding_15"
         android:layout_alignParentRight="true"
         android:background="@null"
-        android:textColor="@color/white"
+        android:textColor="@color/main_textcolor"
         android:textSize="@dimen/default_text_size_14"
         />
 
