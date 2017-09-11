@@ -14,6 +14,9 @@
         app:TitleBarContent="标题1"
         app:TitleBarEditContent="保存"
         app:TitleBarType="0"
+        app:TitleBarBackgroundColor="@color/colorPrimary"
+        app:TitleBarTextColor="@color/white"
+        app:TitleBarBackImg="@drawable/ic_titlebar_back_white"
         />
 
     <com.milinda.titlebar.TitleBar

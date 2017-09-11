@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,10 +25,12 @@ public class TitleBar extends RelativeLayout {
     private TextView tvTitle;
     //标题栏的返回按钮
     private TextView tvTitleBack;
+    //标题栏的底部分隔线
+    private TextView tvTitleDivider;
     //标题栏的编辑按钮
     private TextView tvTitleEdit;
     //标题栏
-    private RelativeLayout rvTltle;
+    private RelativeLayout rlTltle;
 
     private LayoutInflater inflater;
     private Context context;
@@ -148,29 +153,47 @@ public class TitleBar extends RelativeLayout {
         tvTitle=(TextView) view.findViewById(R.id.tv_title);
         tvTitleBack=(TextView) view.findViewById(R.id.tv_title_back);
         tvTitleEdit=(TextView) view.findViewById(R.id.tv_title_edit);
-        rvTltle=(RelativeLayout) view.findViewById(R.id.rv_title);
-
-        tvTitle.setText(titleContent);
-        tvTitle.setTextSize(contentTextSize);
+        tvTitleDivider=(TextView) view.findViewById(R.id.tv_title_divider);
+        rlTltle=(RelativeLayout) view.findViewById(R.id.rv_title);
 
         textColor = textColor==0?ContextCompat.getColor(context, R.color.main_textcolor):textColor;
+        bgColor = bgColor==0?ContextCompat.getColor(context, R.color.white):bgColor;
+        contentTextSize=contentTextSize==0?getResources().getDimensionPixelSize(R.dimen.default_text_size_20):contentTextSize;
+        contentTextSize=contentTextSize/Utils.getDenity(getContext());
+        editTextSize=editTextSize==0?getResources().getDimension(R.dimen.default_text_size_14):editTextSize;
+        editTextSize=editTextSize/Utils.getDenity(getContext());
+        padding=padding==0?getResources().getDimensionPixelOffset(R.dimen.default_padding_15):padding;
+        height=height==0?getResources().getDimensionPixelOffset(R.dimen.titlebar_height):height;
+        if(backImgRes==0)
+            backImgRes=R.drawable.ic_titlebar_back_black;
+
+        if(bgColor==ContextCompat.getColor(context, R.color.white)){
+            tvTitleDivider.setVisibility(View.VISIBLE);
+        }else{
+            tvTitleDivider.setVisibility(View.GONE);
+        }
+
+        tvTitle.setText(titleContent);
+        tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,contentTextSize);
+        tvTitle.setTextColor(textColor);
 
         tvTitleEdit.setText(editContent);
-        tvTitleEdit.setTextSize(editTextSize);
+        tvTitleEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP,editTextSize);
         tvTitleEdit.setTextColor(textColor);
-        tvTitleBack.setPadding(0,0,padding,0);
+        tvTitleEdit.setPadding(padding,0,padding,0);
         if(editImgRes>0)
-            tvTitleEdit.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(editImgRes),null,null,null);
+            tvTitleEdit.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), editImgRes, null),null,null,null);
 
         tvTitleBack.setText(backContent);
-        tvTitleBack.setTextSize(editTextSize);
+        tvTitleBack.setTextSize(TypedValue.COMPLEX_UNIT_SP,editTextSize);
         tvTitleBack.setTextColor(textColor);
-        tvTitleBack.setPadding(padding,0,0,0);
-        tvTitleBack.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(backImgRes),null,null,null);
+        tvTitleBack.setPadding(padding,0,padding,0);
+        tvTitleBack.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), backImgRes, null),null,null,null);
 
-        bgColor = bgColor==0?ContextCompat.getColor(context, R.color.white):bgColor;
-        rvTltle.setBackgroundColor(bgColor);
-        rvTltle.setMinimumHeight(height);
+
+        rlTltle.setBackgroundColor(bgColor);
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,height);
+        rlTltle.setLayoutParams(lp);
         switch (type){
             case TITLEBAR_TYPE_ALL:
                 break;
