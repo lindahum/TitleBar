@@ -2,7 +2,8 @@
 <resources>
     <declare-styleable name="TitleBar">
         <attr name="TitleBarBackgroundColor" format="color" />
-        <attr name="TitleBarTextColor" format="color" />
+        <attr name="TitleBarContentTextColor" format="color" />
+        <attr name="TitleBarEditTextColor" format="color" />
         <attr name="TitleBarHeight" format="dimension" />
         <attr name="TitleBarPadding" format="dimension" />
         <attr name="TitleBarContentTextSize" format="dimension" />

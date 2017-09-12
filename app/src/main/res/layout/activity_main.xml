@@ -12,11 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:TitleBarContent="标题1"
-        app:TitleBarEditContent="保存"
         app:TitleBarType="0"
         app:TitleBarBackgroundColor="@color/colorPrimary"
-        app:TitleBarTextColor="@color/white"
-        app:TitleBarBackImg="@drawable/ic_titlebar_back_white"
+        app:TitleBarContentTextColor="@color/white"
+        app:TitleBarEditTextColor="@color/white"
+        app:TitleBarBackImg="@drawable/ic_back_white"
         />
 
     <com.milinda.titlebar.TitleBar
@@ -25,14 +25,37 @@
         app:TitleBarContent="标题"
         app:TitleBarEditContent="保存"
         app:TitleBarType="1"
+        app:TitleBarBackImg="@drawable/ic_back_black"
         />
 
     <com.milinda.titlebar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:TitleBarContent="标题"
-        app:TitleBarEditContent="保存"
+        app:TitleBarEditContent="添加"
+        app:TitleBarBackContent="返回"
+        app:TitleBarEditTextColor="@color/colorPrimary"
+        app:TitleBarType="1"
+        app:TitleBarBackImg="@drawable/ic_back_green"
+        />
+
+    <com.milinda.titlebar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleBarContent="标题"
+        app:TitleBarType="1"
+        app:TitleBarBackImg="@drawable/ic_scan_white"
+        app:TitleBarEditImg="@drawable/ic_search_white"
+        app:TitleBarBackgroundColor="@color/colorPrimary"
+        app:TitleBarContentTextColor="@color/white"
+        />
+
+    <com.milinda.titlebar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleBarContent="标题"
         app:TitleBarType="2"
+        app:TitleBarBackImg="@drawable/ic_back_black"
         />
 
     <com.milinda.titlebar.TitleBar
@@ -41,6 +64,14 @@
         app:TitleBarContent="标题"
         app:TitleBarEditContent="保存"
         app:TitleBarType="3"
+        />
+
+    <com.milinda.titlebar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleBarContent="标题"
+        app:TitleBarType="3"
+        app:TitleBarEditImg="@drawable/ic_share"
         />
 
 </LinearLayout>
