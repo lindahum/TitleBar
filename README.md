@@ -6,7 +6,7 @@
 
 ## 效果图
 
-![image](https://github.com/lindahum/TitleBar/raw/master/screenshots/main.png)
+<img width="360" height="640" src="https://github.com/lindahum/TitleBar/raw/master/screenshots/main.png"/>
 
 ## 引入
 
