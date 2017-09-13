@@ -22,11 +22,11 @@ public class TitleBar extends RelativeLayout {
 
     //标题栏的内容
     private TextView tvTitle;
-    //标题栏的返回按钮
+    //标题栏的返回组件
     private TextView tvTitleBack;
     //标题栏的底部分隔线
     private TextView tvTitleDivider;
-    //标题栏的编辑按钮
+    //标题栏的编辑组件
     private TextView tvTitleEdit;
     //标题栏
     private RelativeLayout rlTltle;
@@ -46,30 +46,34 @@ public class TitleBar extends RelativeLayout {
     private int padding=0;
     //标题栏的标题的字体大小
     private float contentTextSize=0;
-    //标题栏的编辑按钮的返回与编辑字体大小
+    //标题栏的编辑组件的返回与编辑字体大小
     private float editTextSize=0;
-    //标题栏的返回按钮图片
+    //标题栏的返回组件图片
     private int backImgRes=0;
-    //标题栏的编辑按钮的图片
+    //标题栏的编辑组件的图片
     private int editImgRes=0;
+    //标题栏的中间内容组件左边图片
+    private int contentLeftImgRes=0;
+    //标题栏的中间内容组件右边边图片
+    private int contentRightImgRes=0;
     //标题栏的类型
     private int type=0;
-    //标题栏的返回按钮的内容
+    //标题栏的返回组件的内容
     private String backContent="";
-    //标题栏的编辑按钮的内容
+    //标题栏的编辑组件的内容
     private String editContent="";
     //标题栏的标题内容
     private String titleContent="";
     //标题栏是否处于编辑状态
     private boolean isEdit=false;
 
-    //默认状态，没有返回与编辑按钮
+    //默认状态，没有返回与编辑组件
     private final int TITLEBAR_TYPE_ALL=0;
-    //有返回与编辑按钮
+    //有返回与编辑组件
     private final int TITLEBAR_TYPE_NO_BACK_EDIT=1;
-    //没有编辑按钮
+    //没有编辑组件
     private final int TITLEBAR_TYPE_NO_EDIT=2;
-    //没有返回按钮
+    //没有返回组件
     private final int TITLEBAR_TYPE_NO_BACK=3;
 
     public TitleBar(Context context, AttributeSet attrs) {
@@ -122,6 +126,12 @@ public class TitleBar extends RelativeLayout {
 
                 }else if (attr == R.styleable.TitleBar_TitleBarEditImg) {
                     editImgRes = t.getResourceId(R.styleable.TitleBar_TitleBarEditImg, 0);
+
+                }else if (attr == R.styleable.TitleBar_TitleBarContentLeftImg) {
+                    contentLeftImgRes = t.getResourceId(R.styleable.TitleBar_TitleBarContentLeftImg,0);
+
+                }else if (attr == R.styleable.TitleBar_TitleBarContentRightImg) {
+                    contentRightImgRes = t.getResourceId(R.styleable.TitleBar_TitleBarContentRightImg, 0);
 
                 } else if (attr == R.styleable.TitleBar_TitleBarType) {
                     type = t.getInteger(R.styleable.TitleBar_TitleBarType, 0);
@@ -177,6 +187,10 @@ public class TitleBar extends RelativeLayout {
         tvTitle.setText(titleContent);
         tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,contentTextSize);
         tvTitle.setTextColor(contentTextColor);
+        if(contentRightImgRes>0)
+            tvTitle.setCompoundDrawablesWithIntrinsicBounds(null,null,ResourcesCompat.getDrawable(getResources(), contentRightImgRes, null),null);
+        if(contentLeftImgRes>0)
+            tvTitle.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), contentLeftImgRes, null),null,null,null);
         //标题栏右边编辑组件绑定数据
         tvTitleEdit.setText(editContent);
         tvTitleEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP,editTextSize);
@@ -220,11 +234,27 @@ public class TitleBar extends RelativeLayout {
     }
 
     /**
-     * 设置编辑按钮的点击事件
+     * 设置返回组件的点击事件
+     * @param listener
+     */
+    public void setBackClickListener(OnClickListener listener){
+        tvTitleBack.setOnClickListener(listener);
+    }
+
+    /**
+     * 设置编辑组件的点击事件
      * @param listener
      */
     public void setEditClickListener(OnClickListener listener){
         tvTitleEdit.setOnClickListener(listener);
+    }
+
+    /**
+     * 设置内容组件的点击事件
+     * @param listener
+     */
+    public void setContentClickListener(OnClickListener listener){
+        tvTitle.setOnClickListener(listener);
     }
 
     /**
@@ -236,7 +266,7 @@ public class TitleBar extends RelativeLayout {
     }
 
     /**
-     * 设置编辑按钮的内容
+     * 设置编辑组件的内容
      * @param content
      */
     public void setEditContent(String content){
@@ -244,7 +274,15 @@ public class TitleBar extends RelativeLayout {
     }
 
     /**
-     * 切换编辑按钮的状态
+     * 设置返回组件的内容
+     * @param content
+     */
+    public void setBackContent(String content){
+        tvTitleBack.setText(content);
+    }
+
+    /**
+     * 切换编辑组件的状态
      * @param isEdit
      */
     public void setIsEdit(boolean isEdit){
@@ -257,7 +295,7 @@ public class TitleBar extends RelativeLayout {
     }
 
     /**
-     * 获取编辑按钮的状态
+     * 获取编辑组件的状态
      * @return
      */
     public boolean isEdit() {

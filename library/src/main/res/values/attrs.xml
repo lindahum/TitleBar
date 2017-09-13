@@ -10,9 +10,11 @@
         <attr name="TitleBarEditTextSize" format="dimension" />
         <attr name="TitleBarBackImg" format="reference" />
         <attr name="TitleBarEditImg" format="reference" />
-        <attr name="TitleBarType" format="integer" />
+        <attr name="TitleBarContentRightImg" format="reference" />
+        <attr name="TitleBarContentLeftImg" format="reference" />
         <attr name="TitleBarBackContent" format="string" />
         <attr name="TitleBarEditContent" format="string" />
         <attr name="TitleBarContent" format="string" />
+        <attr name="TitleBarType" format="integer" />
     </declare-styleable>
 </resources>
