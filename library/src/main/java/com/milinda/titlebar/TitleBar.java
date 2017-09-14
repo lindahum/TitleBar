@@ -169,61 +169,28 @@ public class TitleBar extends RelativeLayout {
         tvTitleEdit=(TextView) view.findViewById(R.id.tv_title_edit);
         tvTitleDivider=(TextView) view.findViewById(R.id.tv_title_divider);
         rlTltle=(RelativeLayout) view.findViewById(R.id.rv_title);
-        //初始化组件绑定的数据
-        bgColor = bgColor==0?ContextCompat.getColor(context, R.color.white):bgColor;
-        contentTextColor = contentTextColor==0?ContextCompat.getColor(context, R.color.main_textcolor):contentTextColor;
-        editTextColor = editTextColor==0?ContextCompat.getColor(context, R.color.main_textcolor):editTextColor;
-        contentTextSize=handleTextSize(contentTextSize,R.dimen.default_text_size_20);
-        editTextSize=handleTextSize(editTextSize,R.dimen.default_text_size_14);
-        padding=padding==0?getResources().getDimensionPixelOffset(R.dimen.default_padding_15):padding;
-        height=height==0?getResources().getDimensionPixelOffset(R.dimen.titlebar_height):height;
-        //默认标题栏的背景为白色时，显示分隔线
-        if(bgColor==ContextCompat.getColor(context, R.color.white)){
-            tvTitleDivider.setVisibility(View.VISIBLE);
-        }else{
-            tvTitleDivider.setVisibility(View.GONE);
-        }
+
         //标题栏中间内容组件绑定数据
-        tvTitle.setText(titleContent);
-        tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,contentTextSize);
-        tvTitle.setTextColor(contentTextColor);
-        if(contentRightImgRes>0)
-            tvTitle.setCompoundDrawablesWithIntrinsicBounds(null,null,ResourcesCompat.getDrawable(getResources(), contentRightImgRes, null),null);
-        if(contentLeftImgRes>0)
-            tvTitle.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), contentLeftImgRes, null),null,null,null);
+        setTitleContent(titleContent);
+        setContentTextColor(contentTextColor);
+        setContentTextSize(contentTextSize);
+        setContentLeftImgRes(contentRightImgRes);
+        setContentRightImgRes(contentRightImgRes);
         //标题栏右边编辑组件绑定数据
-        tvTitleEdit.setText(editContent);
-        tvTitleEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP,editTextSize);
-        tvTitleEdit.setTextColor(editTextColor);
-        tvTitleEdit.setPadding(padding,0,padding,0);
-        if(editImgRes>0)
-            tvTitleEdit.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), editImgRes, null),null,null,null);
+        setEditContent(editContent);
+        setEditTextColor(editTextColor);
+        setEditTextSize(editTextSize);
+        setPadding(padding);
+        setEditImgRes(editImgRes);
         //标题栏左边返回组件绑定数据
-        tvTitleBack.setText(backContent);
-        tvTitleBack.setTextSize(TypedValue.COMPLEX_UNIT_SP,editTextSize);
-        tvTitleBack.setTextColor(editTextColor);
-        tvTitleBack.setPadding(padding,0,padding,0);
-        if(backImgRes>0)
-            tvTitleBack.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), backImgRes, null),null,null,null);
+        setBackContent(backContent);
+        setBackImgRes(backImgRes);
         //标题栏背景设置
-        rlTltle.setBackgroundColor(bgColor);
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,height);
-        rlTltle.setLayoutParams(lp);
-        //根据类型处理相应组件的显示与否
-        switch (type){
-            case TITLEBAR_TYPE_ALL:
-                tvTitleBack.setVisibility(View.GONE);
-                tvTitleEdit.setVisibility(View.GONE);
-                break;
-            case TITLEBAR_TYPE_NO_BACK_EDIT:
-                break;
-            case TITLEBAR_TYPE_NO_EDIT:
-                tvTitleEdit.setVisibility(View.GONE);
-                break;
-            case TITLEBAR_TYPE_NO_BACK:
-                tvTitleBack.setVisibility(View.GONE);
-                break;
-        }
+        setBgColor(bgColor);
+        setHeight(height);
+
+        changType(type);
+
         //返回组件点击事件处理
         tvTitleBack.setOnClickListener(new OnClickListener() {
             @Override
@@ -262,7 +229,10 @@ public class TitleBar extends RelativeLayout {
      * @param content
      */
     public void setTitleContent(String content){
-        tvTitle.setText(content);
+        if(!Utils.isTrimEmpty(content)){
+            this.titleContent=content;
+            tvTitle.setText(content);
+        }
     }
 
     /**
@@ -270,7 +240,10 @@ public class TitleBar extends RelativeLayout {
      * @param content
      */
     public void setEditContent(String content){
-        tvTitleEdit.setText(content);
+        if(!Utils.isTrimEmpty(content)) {
+            this.editContent = content;
+            tvTitleEdit.setText(content);
+        }
     }
 
     /**
@@ -278,7 +251,133 @@ public class TitleBar extends RelativeLayout {
      * @param content
      */
     public void setBackContent(String content){
-        tvTitleBack.setText(content);
+        if(!Utils.isTrimEmpty(content)) {
+            this.backContent = content;
+            tvTitleBack.setText(content);
+        }
+    }
+
+    /**
+     * 设置标题栏的背景色
+     * @param bgColor
+     */
+    public void setBgColor(int bgColor) {
+        bgColor = bgColor==0?ContextCompat.getColor(context, R.color.white):bgColor;
+        this.bgColor = bgColor;
+        rlTltle.setBackgroundColor(bgColor);
+        //默认标题栏的背景为白色时，显示分隔线
+        if(bgColor==ContextCompat.getColor(context, R.color.white)){
+            tvTitleDivider.setVisibility(View.VISIBLE);
+        }else{
+            tvTitleDivider.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 设置标题栏的中间内容组件的字体颜色
+     * @param contentTextColor
+     */
+    public void setContentTextColor(int contentTextColor) {
+        contentTextColor = contentTextColor==0?ContextCompat.getColor(context, R.color.main_textcolor):contentTextColor;
+        this.contentTextColor = contentTextColor;
+        tvTitle.setTextColor(contentTextColor);
+    }
+
+    /**
+     * 设置标题栏的左边返回与右边编辑组件的字体颜色
+     * @param editTextColor
+     */
+    public void setEditTextColor(int editTextColor) {
+        editTextColor = editTextColor==0?ContextCompat.getColor(context, R.color.main_textcolor):editTextColor;
+        this.editTextColor = editTextColor;
+        tvTitleEdit.setTextColor(contentTextColor);
+    }
+
+    /**
+     * 设置标题栏的高度
+     * @param height
+     */
+    public void setHeight(int height) {
+        height=height==0?getResources().getDimensionPixelOffset(R.dimen.titlebar_height):height;
+        this.height = height;
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,height);
+        rlTltle.setLayoutParams(lp);
+    }
+
+    /**
+     * 设置标题栏的左右边距
+     * @param padding
+     */
+    public void setPadding(int padding) {
+        padding=padding==0?getResources().getDimensionPixelOffset(R.dimen.default_padding_15):padding;
+        this.padding = padding;
+        tvTitleBack.setPadding(padding,0,padding,0);
+        tvTitleEdit.setPadding(padding,0,padding,0);
+    }
+
+    /**
+     * 设置标题栏的中间内容组件的字体大小
+     * @param contentTextSize
+     */
+    public void setContentTextSize(float contentTextSize) {
+        contentTextSize=handleTextSize(contentTextSize,R.dimen.default_text_size_20);
+        this.contentTextSize = contentTextSize;
+        tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,contentTextSize);
+    }
+
+    /**
+     * 设置标题栏的左边返回与右边编辑组件的字体大小
+     * @param editTextSize
+     */
+    public void setEditTextSize(float editTextSize) {
+        editTextSize=handleTextSize(editTextSize,R.dimen.default_text_size_14);
+        this.editTextSize = editTextSize;
+        tvTitleEdit.setTextSize(TypedValue.COMPLEX_UNIT_SP,editTextSize);
+        tvTitleBack.setTextSize(TypedValue.COMPLEX_UNIT_SP,editTextSize);
+    }
+
+    /**
+     * 设置标题栏的左边返回组件的左边图片资源
+     * @param backImgRes
+     */
+    public void setBackImgRes(int backImgRes) {
+        if(backImgRes>0){
+            tvTitleBack.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), backImgRes, null),null,null,null);
+            this.backImgRes = backImgRes;
+        }
+    }
+
+    /**
+     * 设置标题栏的右边编辑组件的左边图片资源
+     * @param editImgRes
+     */
+    public void setEditImgRes(int editImgRes) {
+        if(editImgRes>0){
+            tvTitleEdit.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), editImgRes, null),null,null,null);
+            this.editImgRes = editImgRes;
+        }
+    }
+
+    /**
+     * 设置标题栏的中间内容组件的左边图片资源
+     * @param contentLeftImgRes
+     */
+    public void setContentLeftImgRes(int contentLeftImgRes) {
+        if(contentLeftImgRes>0){
+            this.contentLeftImgRes = contentLeftImgRes;
+            tvTitle.setCompoundDrawablesWithIntrinsicBounds(ResourcesCompat.getDrawable(getResources(), contentLeftImgRes, null),null,null,null);
+        }
+    }
+
+    /**
+     * 设置标题栏的中间内容组件的右边图片资源
+     * @param contentRightImgRes
+     */
+    public void setContentRightImgRes(int contentRightImgRes) {
+        if(contentRightImgRes>0){
+            this.contentRightImgRes = contentRightImgRes;
+            tvTitle.setCompoundDrawablesWithIntrinsicBounds(null,null,ResourcesCompat.getDrawable(getResources(), contentRightImgRes, null),null);
+        }
     }
 
     /**
@@ -305,8 +404,22 @@ public class TitleBar extends RelativeLayout {
     /**
      * 切换标题栏状态
      */
-    public void changType(){
-        tvTitleEdit.setVisibility(View.GONE);
+    public void changType(int type){
+        this.type=type;
+        switch (type){
+            case TITLEBAR_TYPE_ALL:
+                tvTitleBack.setVisibility(View.GONE);
+                tvTitleEdit.setVisibility(View.GONE);
+                break;
+            case TITLEBAR_TYPE_NO_BACK_EDIT:
+                break;
+            case TITLEBAR_TYPE_NO_EDIT:
+                tvTitleEdit.setVisibility(View.GONE);
+                break;
+            case TITLEBAR_TYPE_NO_BACK:
+                tvTitleBack.setVisibility(View.GONE);
+                break;
+        }
     }
 
 
